@@ -13,8 +13,8 @@ public class JwtstudyApplication {
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository){
         return (args)->{
-            userRepository.save(User.builder().username("ssar").password("1234").email("ssar@nate.com").role("user").build());
-            userRepository.save(User.builder().username("admin").password("1234").email("admin@nate.com").role("admin").build());
+            userRepository.save(User.builder().username("ssar").password("1234").email("ssar@nate.com").role("USER").build());
+            userRepository.save(User.builder().username("admin").password("1234").email("admin@nate.com").role("ADMIN").build());
         };
     }
 

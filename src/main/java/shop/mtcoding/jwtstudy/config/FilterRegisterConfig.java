@@ -9,10 +9,10 @@ import shop.mtcoding.jwtstudy.config.filter.JwtVerifyFilter;
 public class FilterRegisterConfig {
     @Bean
     public FilterRegistrationBean<?> jwtVerifyFilterAdd() {
-        FilterRegistrationBean<JwtVerifyFilter> registraion = new FilterRegistrationBean<>();
-        registraion.setFilter(new JwtVerifyFilter());
-        registraion.addUrlPatterns("/user");
-        registraion.setOrder(1);
-        return registraion;
+        FilterRegistrationBean<JwtVerifyFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new JwtVerifyFilter());
+        registration.addUrlPatterns("/user/*");
+        registration.setOrder(1);
+        return registration;
     }
 }
