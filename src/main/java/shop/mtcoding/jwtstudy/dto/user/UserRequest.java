@@ -1,4 +1,4 @@
-package shop.mtcoding.jwtstudy.dto;
+package shop.mtcoding.jwtstudy.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

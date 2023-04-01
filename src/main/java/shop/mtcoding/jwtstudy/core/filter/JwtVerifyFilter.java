@@ -1,10 +1,14 @@
-package shop.mtcoding.jwtstudy.config.filter;
+package shop.mtcoding.jwtstudy.core.filter;
 
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import shop.mtcoding.jwtstudy.config.auth.JwtProvider;
-import shop.mtcoding.jwtstudy.config.auth.LoginUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import shop.mtcoding.jwtstudy.core.exception.Exception400;
+import shop.mtcoding.jwtstudy.core.jwt.JwtProvider;
+import shop.mtcoding.jwtstudy.core.session.LoginUser;
+import shop.mtcoding.jwtstudy.dto.ResponseDto;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +24,7 @@ public class JwtVerifyFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         String prefixJwt = req.getHeader(JwtProvider.HEADER);
         if(prefixJwt == null){
-            resp.setStatus(401);
-            resp.setContentType("text/plain; charset=utf-8");
-            resp.getWriter().println("로그인 다시해");
+            error(resp, new Exception400("토큰이 전달되지 않았습니다"));
             return;
         }
         String jwt = prefixJwt.replace(JwtProvider.TOKEN_PREFIX, "");
@@ -31,20 +33,24 @@ public class JwtVerifyFilter implements Filter {
             int id = decodedJWT.getClaim("id").asInt();
             String role = decodedJWT.getClaim("role").asString();
 
-            // 내부적으로 권한처리 (인터셉터와 함께 사용하면 좋지만, 추후 스프링 시큐리티로 다룰 예정)
             HttpSession session =  req.getSession();
             LoginUser loginUser = LoginUser.builder().id(id).role(role).build();
             session.setAttribute("loginUser", loginUser);
             chain.doFilter(req, resp);
         }catch (SignatureVerificationException sve){
-            resp.setStatus(401);
-            resp.setContentType("text/plain; charset=utf-8");
-            resp.getWriter().println("로그인 다시해");
+            error(resp, sve);
         }catch (TokenExpiredException tee){
-            resp.setStatus(401);
-            resp.setContentType("text/plain; charset=utf-8");
-            resp.getWriter().println("로그인 다시해");
+            error(resp, tee);
         }
+    }
+
+    private void error(HttpServletResponse resp, Exception e) throws IOException {
+        resp.setStatus(401);
+        resp.setContentType("application/json; charset=utf-8");
+        ResponseDto<?> responseDto = new ResponseDto<>().fail(HttpStatus.UNAUTHORIZED, "인증 안됨", e.getMessage());
+        ObjectMapper om = new ObjectMapper();
+        String responseBody = om.writeValueAsString(responseDto);
+        resp.getWriter().println(responseBody);
     }
 
 }

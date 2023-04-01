@@ -1,11 +1,11 @@
-package shop.mtcoding.jwtstudy.config.auth;
+package shop.mtcoding.jwtstudy.core.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import shop.mtcoding.jwtstudy.model.User;
+import shop.mtcoding.jwtstudy.model.user.User;
 
 import java.util.Date;
 

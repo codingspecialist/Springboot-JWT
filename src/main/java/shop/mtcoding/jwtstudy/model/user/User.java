@@ -1,4 +1,4 @@
-package shop.mtcoding.jwtstudy.model;
+package shop.mtcoding.jwtstudy.model.user;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @NoArgsConstructor
 @Setter // DTO 만들면 삭제해야됨
@@ -17,16 +19,26 @@ import java.sql.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String username;
     private String password;
     private String email;
     private String role;
-    @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     @Builder
-    public User(Integer id, String username, String password, String email, String role, Timestamp createdAt) {
+    public User(Long id, String username, String password, String email, String role, LocalDateTime createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;

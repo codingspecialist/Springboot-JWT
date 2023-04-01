@@ -4,8 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import shop.mtcoding.jwtstudy.model.User;
-import shop.mtcoding.jwtstudy.model.UserRepository;
+import shop.mtcoding.jwtstudy.model.user.User;
+import shop.mtcoding.jwtstudy.model.user.UserRepository;
 
 @SpringBootApplication
 public class JwtstudyApplication {

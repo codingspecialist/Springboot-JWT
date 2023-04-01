@@ -3,7 +3,7 @@ package shop.mtcoding.jwtstudy.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import shop.mtcoding.jwtstudy.config.filter.JwtVerifyFilter;
+import shop.mtcoding.jwtstudy.core.filter.JwtVerifyFilter;
 
 @Configuration
 public class FilterRegisterConfig {

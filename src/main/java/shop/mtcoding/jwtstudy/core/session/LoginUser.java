@@ -1,4 +1,4 @@
-package shop.mtcoding.jwtstudy.config.auth;
+package shop.mtcoding.jwtstudy.core.session;
 
 import lombok.Builder;
 import lombok.Getter;
