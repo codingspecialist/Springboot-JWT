@@ -80,7 +80,7 @@ public class UserController {
             loginLogRepository.save(loginLog);
 
             // 5. 응답 DTO 생성
-            ResponseDto<?> responseDto = new ResponseDto<>().data(new UserResponse.LoginDto(loginUser));
+            ResponseDto<?> responseDto = new ResponseDto<>().data(loginUser);
             return ResponseEntity.ok().header(JwtProvider.HEADER, jwt).body(responseDto);
         } else {
             throw new Exception400("유저네임 혹은 아이디가 잘못되었습니다");
